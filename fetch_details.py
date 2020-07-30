@@ -57,6 +57,7 @@ def map_track_details(playlist_tracks_data):
     tracks_data['title'] = playlist_tracks_titles
     tracks_data['artists'] = playlist_tracks_artists
     tracks_data['first_artist'] = playlist_tracks_first_artists
+    tracks_data['album'] = playlist_tracks_albums
     return tracks_data
 
 
@@ -67,7 +68,6 @@ def features_to_frame(sp, tracks_id):
     keys = features[0][0].keys()
     feats = []
     for f in features:
-        # idx = f[0].get('id')
         feats.append(f[0])
     features_df = pd.DataFrame(data=feats, columns=keys)
     return features_df
@@ -76,10 +76,11 @@ def features_to_frame(sp, tracks_id):
 # Merge track infos into single dataframe
 def merge_data(features_df, tracks_data):
     features_df['title'] = tracks_data['title']
-    features_df['first_artist'] = tracks_data['first_artist']
+    features_df['artist'] = tracks_data['first_artist']
     features_df['all_artists'] = tracks_data['artists']
-    # features_df = features_df.set_index('id')
-    features_df = features_df[['id', 'title', 'first_artist', 'all_artists',
+    features_df['album'] = tracks_data['album']
+    features_df = features_df.set_index('id')
+    features_df = features_df[['id', 'title', 'artist', 'album', 'all_artists',
                             'danceability', 'energy', 'key', 'loudness',
                             'mode', 'speechiness', 'acousticness',
                             'instrumentalness', 'liveness', 'valence',
