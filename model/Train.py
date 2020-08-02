@@ -18,7 +18,7 @@ def get_songs_frame(playlists):
 
 
 def clean(songs_df):
-    songs_df = songs_df.drop(['id', 'first_artist', 'all_artists', 'album'], axis=1)
+    songs_df = songs_df.drop(['id', 'artist', 'all_artists', 'album'], axis=1)
     return songs_df
 
 
@@ -36,7 +36,8 @@ def train_model(songs_df):
     print('Model Training Finished.\n\tAccuracy obtained: {}'.format(accuracy))
 
 
-all_songs_df = get_songs_frame(PLS)
-
-
-trainable_df = clean(all_songs_df)
+def load_dfs():
+    all_songs_df = get_songs_frame(PLS)
+    trainable_df = clean(all_songs_df)
+    prediction = trainable_df.copy().drop(['title'], axis=1)
+    return prediction
