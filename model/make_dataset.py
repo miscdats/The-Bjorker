@@ -9,13 +9,13 @@ PLAYLISTS_JSON = 'playlists_bjork_me.json'
 # Spotify init with credentials
 def init_spotipy(credentials_json):
     """Load credentials from JSON into Spotify client manager and start a session."""
-    print('Starting session.\n')
+    print('Starting session.')
     credentials = json.load(open(credentials_json))  # 'authorization.json'))
     client_id = credentials['client_id']
     client_secret = credentials['client_secret']
     client_credentials_manager = SpotifyClientCredentials(client_id=client_id, client_secret=client_secret)
     spotipy_client = spotipy.Spotify(client_credentials_manager=client_credentials_manager)
-    print('...\n')
+    print('...')
     pl_idx = int(input('Which playlist to make CSV? 0 for Bjork, 1 for mine.'))  # 0 bjork, 1 mine
     return spotipy_client, pl_idx
 

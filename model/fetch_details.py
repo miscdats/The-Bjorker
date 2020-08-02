@@ -7,7 +7,7 @@ import json
 # Playlist data
 def get_playlists_data(sp, playlists_json, pl_idx):
     """Load JSON list of playlists and fetch tracks data from Spotify."""
-    print('\nGetting playlist data...')
+    print('Getting playlist data...')
     playlist_index = pl_idx
     playlists = json.load(open(playlists_json))
     playlist_uri = playlists[playlist_index]['uri']
@@ -31,7 +31,7 @@ def get_playlists_data(sp, playlists_json, pl_idx):
 # Tracks data
 def map_track_details(playlist_tracks_data, is_bjork_inspo):
     """Maps attributes for tracks from playlists query results."""
-    print('\nMapping track details...')
+    print('Mapping track details...')
     tracks_data = {}
     playlist_tracks_id = []
     playlist_tracks_uri = []
@@ -67,7 +67,7 @@ def map_track_details(playlist_tracks_data, is_bjork_inspo):
 # Audio features extraction 
 def features_to_frame(sp, tracks_id):
     """Uses Spotify function to extract audio features and returns merged dataframe."""
-    print('\nPutting features in dataframe...')
+    print('Putting features in dataframe...')
     features = list(map(lambda x: sp.audio_features(x), tracks_id))
     keys = features[0][0].keys()
     feats = []
@@ -80,7 +80,7 @@ def features_to_frame(sp, tracks_id):
 # Merge track infos into single dataframe
 def merge_data(features_df, tracks_data):
     """Cleans up and merges track data into single dataframe."""
-    print('\nMerging all data so far...')
+    print('Merging all data so far...')
     features_df['title'] = tracks_data['title']
     features_df['artist'] = tracks_data['first_artist']
     features_df['all_artists'] = tracks_data['artists']
@@ -98,7 +98,7 @@ def merge_data(features_df, tracks_data):
 # Merge analysis info to dataframe
 def get_analyses(sp, features_df):
     """Use Spotipy to get audio analysis for each track in dataframe, added as columns."""
-    print('\nAnalyze this!')
+    print('Analyze this!')
     num_bars = []
     num_sections = []
     num_segments = []
@@ -117,5 +117,6 @@ def get_analyses(sp, features_df):
 
 
 def save_details_to_csv(features_df, playlist_index):
-    print('\nSaving details to our dedicated CSV.')
-    features_df.to_csv("playlist_" + str(playlist_index) + ".csv", encoding='utf-8', index="false")
+    csv_filename = "playlist_" + str(playlist_index) + ".csv"
+    print('\nSaving details to : ', csv_filename)
+    features_df.to_csv(csv_filename, encoding='utf-8', index="false")
