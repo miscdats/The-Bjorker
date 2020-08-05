@@ -91,7 +91,7 @@ def train_models(X_train, X_test, y_train, y_test):
     print(accuracy_score(y_test, knn_pred))
     # Check performance using roc
     roc_auc_score(y_test, knn_pred)
-    return lr_pred
+    return knn_pred
     # x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.25, random_state=0)
     # dt = DecisionTreeClassifier().fit(x_train, y_train)
     # preds = dt.predict(x_test)
@@ -120,4 +120,4 @@ def main():
     songs.sort_values('title').head()
     final_prediction = songs[['title', 'is_bjork_inspo', 'prediction']]
     # print(final_prediction)
-    # return final_prediction
+    return final_prediction
