@@ -12,9 +12,8 @@ def get_playlists_data(sp, playlists_json, pl_idx):
     playlists = json.load(open(playlists_json))
     playlist_uri = playlists[playlist_index]['uri']
     is_bjork_inspo = playlists[playlist_index]['bjork_inspo']
-    uri = playlist_uri    # the URI is split by ':' to get the username and playlist ID
-    # username = uri.split(':')[2]
-    playlist_id = uri.split(':')[4]
+    uri = playlist_uri    # the URI is split by ':'
+    playlist_id = uri.split(':')[2]
     # call upon our client, get more than 99 tracks
     offset = 0
     tracks = []

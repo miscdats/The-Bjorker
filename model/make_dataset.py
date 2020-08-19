@@ -5,6 +5,8 @@ from model.fetch_details import *
 CREDENTIALS_JSON = 'authorization.json'
 PLAYLISTS_JSON = 'playlists_bjork_me.json'
 
+# TODO : change to /predict make dataset of playlist entered instead of hardcoded tester
+
 
 # Spotify init with credentials
 def init_spotipy(credentials_json):

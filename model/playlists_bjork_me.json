@@ -1,10 +1,10 @@
 [
     {
-        "uri": "spotify:user:Test_Bjork:playlist:1VBK0TxoYVEbnfFl6VCtEu",
+        "uri": "spotify:playlist:1VBK0TxoYVEbnfFl6VCtEu",
         "bjork_inspo": true
     },
     {
-        "uri": "spotify:user:Test_Me:playlist:18OPs73tK3BYXlwq4iCW3z",
+        "uri": "spotify:playlist:18OPs73tK3BYXlwq4iCW3z",
         "bjork_inspo": false
     }
 ]
