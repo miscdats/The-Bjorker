@@ -3,6 +3,9 @@ from sklearn.metrics import accuracy_score
 from sklearn.metrics import confusion_matrix, classification_report
 from sklearn.linear_model import LogisticRegression
 from sklearn.neighbors import KNeighborsClassifier
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.cluster import KMeans
+from sklearn.tree import DecisionTreeClassifier
 from sklearn.preprocessing import StandardScaler
 from sklearn.preprocessing import MinMaxScaler
 from sklearn.preprocessing import RobustScaler
@@ -10,11 +13,11 @@ from sklearn.metrics import roc_auc_score
 from sklearn.model_selection import GridSearchCV
 import pandas as pd
 import numpy as np
+import pickle
 
 # import joblib
 
-
-PLAYLIST_BJORK_CSV = 'playlist_0.csv'
+PLAYLIST_BJORK_CSV = 'playlist_0.csv'  # size : 174
 PLAYLIST_ME_CSV = 'playlist_1.csv'
 PLS = [PLAYLIST_BJORK_CSV, PLAYLIST_ME_CSV]
 
@@ -33,9 +36,9 @@ def rescale(songs_df):
     print('Rescaling audio features...')
     scaler = StandardScaler()
     features = [['danceability', 'energy', 'key', 'loudness', 'speechiness',
-                'acousticness', 'instrumentalness', 'liveness', 'valence', 'tempo',
-                'duration_ms', 'time_signature', 'num_bars', 'num_sections',
-                'num_segments']]
+                 'acousticness', 'instrumentalness', 'liveness', 'valence', 'tempo',
+                 'duration_ms', 'time_signature', 'num_bars', 'num_sections',
+                 'num_segments']]
     for feature in features:
         songs_df[feature] = scaler.fit_transform(songs_df[feature])
     return songs_df
@@ -91,15 +94,44 @@ def train_models(X_train, X_test, y_train, y_test):
     print(accuracy_score(y_test, knn_pred))
     # Check performance using roc
     roc_auc_score(y_test, knn_pred)
-    return knn_pred
-    # x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.25, random_state=0)
-    # dt = DecisionTreeClassifier().fit(x_train, y_train)
-    # preds = dt.predict(x_test)
-    #
+    dt_model = DecisionTreeClassifier()
+    dt_model.fit(X_train, y_train)
+    dt_pred = dt_model.predict(X_test)
+    print('DecisionTreeClassifier')
+    print(confusion_matrix(y_test, dt_pred))
+    print('\n')
+    print(classification_report(y_test, dt_pred))
+    # Check performance using accuracy
+    print(accuracy_score(y_test, dt_pred))
+    # Check performance using roc
+    roc_auc_score(y_test, dt_pred)
+    # we choose to have 10 decision trees
+    rfc_model = RandomForestClassifier(n_estimators=10)
+    rfc_model.fit(X_train, y_train)
+    rfc_pred = rfc_model.predict(X_test)
+    print('RandomForestClassifier')
+    print(confusion_matrix(y_test, rfc_pred))
+    print('\n')
+    print(classification_report(y_test, rfc_pred))
+    # Check performance using accuracy
+    print(accuracy_score(y_test, rfc_pred))
+    # Check performance using roc
+    roc_auc_score(y_test, rfc_pred)
+    # kmeans_model = KMeans(n_clusters=10)
+    # kmeans_model.fit(X_train)
+    # kmeans_pred = kmeans_model.predict(X_train)
+    # print('KMeans')
+    # print(confusion_matrix(y_test, kmeans_pred))
+    # print('\n')
+    # print(classification_report(y_test, kmeans_pred))
+    # # Check performance using accuracy
+    # print(accuracy_score(y_test, kmeans_pred))
+    # # Check performance using roc
+    # roc_auc_score(y_test, kmeans_pred)
     # accuracy = accuracy_score(y_test, preds)
     # joblib.dump(dt, 'playlist-model.model')
     # print('Model Training Finished.\n\tAccuracy obtained: {}'.format(accuracy))
-    # return accuracy
+    return knn_pred
 
 
 def load_dfs():
@@ -111,7 +143,7 @@ def load_dfs():
 
 
 def main():
-    """The main event. Gets a prediction: will you be as inspired as Bjork could be!?"""
+    """The main event. Returns a prediction on playlist: will you be as inspired as Bjork could be!?"""
     print('START!')
     songs, prediction = load_dfs()
     X_train, X_test, y_train, y_test = split_x_y(songs, prediction)
