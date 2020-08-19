@@ -4,8 +4,8 @@ import pandas as pd
 import numpy as np
 import pickle
 
-PLAYLIST_BJORK_CSV = 'playlist_0.csv'  # size : 174
-PLAYLIST_ENTERED_CSV = 'playlist_1.csv'
+PLAYLIST_BJORK_CSV = 'model/playlist_0.csv'  # size : 174
+PLAYLIST_ENTERED_CSV = 'model/playlist_1.csv'
 PLS = [PLAYLIST_BJORK_CSV, PLAYLIST_ENTERED_CSV]
 
 
@@ -41,8 +41,8 @@ def clean(songs_df):
     songs = inspo_df.append(songz_df, ignore_index=False)
     songs = songs.drop_duplicates()
     songs = rescale(songs)
-    songs = songs.drop(['id', 'artist', 'all_artists', 'album'], axis=1)
-    prediction = songs.drop(['title'], axis=1)
+    songs = songs.drop(['id', 'all_artists', 'album'], axis=1)
+    prediction = songs.drop(['title', 'artist'], axis=1)
     return songs, prediction
 
 
@@ -50,7 +50,7 @@ def split_x_y(songs, prediction):
     """Splits our dataframes into x / y train / test to return and displays snippet."""
     print('Splitting train and test sets...')
     X_train = prediction.drop('is_bjork_inspo', axis=1)
-    X_test = songs.drop(['is_bjork_inspo', 'title'], axis=1)
+    X_test = songs.drop(['is_bjork_inspo', 'title', 'artist'], axis=1)
     y_train = prediction['is_bjork_inspo']
     y_test = songs['is_bjork_inspo']
     return X_train, X_test, y_train, y_test
@@ -75,7 +75,7 @@ def load_dfs():
 
 def dump(trained_model):
     """Use pickling to write our Python object model to file for later use."""
-    pickle.dump(trained_model, open('model.pkl', 'wb'))
+    pickle.dump(trained_model, open('model/model.pkl', 'wb'))
     print('Pickled : model.pkl')
 
 
