@@ -9,8 +9,8 @@ body {
 	background: #b8b8b8;
 	color: #aaff58;
 	font-size: 24px;
-	text-align:center;
-	letter-spacing:1.4px;
+	text-align: center;
+	letter-spacing: 1.4px;
 
 }
 .login {
@@ -22,13 +22,17 @@ body {
 	height:400px;
 }
 
-.login h1 { color: #aaff58; text-shadow: 0 0 10px rgba(0,0,0,0.3); letter-spacing:1px; text-align:center; }
+.login h1 {
+	color: #aaff58;
+	text-shadow: 0 0 10px rgba(0,0,0,0.5);
+	letter-spacing:1px;
+	text-align:center;
+}
 
 input {
 	width: 100%;
 	margin-bottom: 10px;
 	background: rgba(0,0,0,0.3);
-	border: none;
 	outline: none;
 	padding: 10px;
 	font-size: 13px;
@@ -42,4 +46,15 @@ input {
 	-o-transition: box-shadow .5s ease;
 	-ms-transition: box-shadow .5s ease;
 	transition: box-shadow .5s ease;
+}
+
+table {
+	font-size: 12px;
+	width: 100%;
+}
+
+tr, td, th {
+	width: 100%;
+	margin-bottom: 10px;
+	font-size: 13px;
 }

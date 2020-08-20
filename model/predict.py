@@ -10,13 +10,12 @@ def make_prediction(trained_model, X_test):
 def displayable_prediction(songs, trained):
     """Modify the datasets with track predictions for display, prints then returns it back."""
     final_prediction = songs.copy()
-    final_prediction['prediction'] = trained
-    final_prediction.sort_values('title')
-    final_prediction = final_prediction[['title', 'artist', 'prediction']]
-    readable_feedback = {0: 'Not Quite', 1: 'Would Like'}
-    final_prediction['prediction'] = final_prediction['prediction'].map(readable_feedback)
-    # final_prediction = final_prediction.iloc[175:]
-    # print(final_prediction)
+    final_prediction['song'] = songs['artist'].map(str) + ' - ' + songs['title'].map(str)
+    final_prediction['is she?'] = trained
+    final_prediction.sort_values('song')
+    final_prediction = final_prediction[['song', 'is she?']]
+    readable_feedback = {0: 'Not Quite', 1: 'Would Be'}
+    final_prediction['is she?'] = final_prediction['is she?'].map(readable_feedback)
     return final_prediction[175:]
 
 
