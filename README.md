@@ -10,3 +10,7 @@ free to keep trying different playlists!
 - Create joint playlists by inspiring tracks
 - Create merged track lists by non-Bjork-approved songs
 - More!
+
+## To Run
+```python app.py``` to start the local server
+```localhost:5000``` to reach in your browser
