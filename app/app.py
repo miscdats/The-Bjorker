@@ -1,8 +1,8 @@
 import os
 import numpy as np
 from flask import Flask, request, jsonify, render_template
-from model.model import request_training
-from model.predict import get_predictions
+from .model.model import request_training
+from .model.predict import get_predictions
 import pickle
 
 app = Flask(__name__)
