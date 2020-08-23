@@ -1,20 +1,22 @@
+import os
+from dotenv import load_dotenv, find_dotenv
 import spotipy
 from spotipy.oauth2 import SpotifyClientCredentials
-from model.fetch_details import *
+from .model.fetch_details import *
 
-CREDENTIALS_JSON = 'authorization.json'
+
+load_dotenv(find_dotenv())
 PLAYLISTS_JSON = 'playlists_bjork_me.json'
 
 # TODO : change to /predict make dataset of playlist entered instead of hardcoded tester
 
 
 # Spotify init with credentials
-def init_spotipy(credentials_json):
+def init_spotipy():
     """Load credentials from JSON into Spotify client manager and start a session."""
     print('Starting session.')
-    credentials = json.load(open(credentials_json))  # 'authorization.json'))
-    client_id = credentials['client_id']
-    client_secret = credentials['client_secret']
+    client_id = os.environ['CLIENT_ID']
+    client_secret = os.environ['CLIENT_SECRET']
     client_credentials_manager = SpotifyClientCredentials(client_id=client_id, client_secret=client_secret)
     spotipy_client = spotipy.Spotify(client_credentials_manager=client_credentials_manager)
     print('...')
@@ -22,7 +24,7 @@ def init_spotipy(credentials_json):
     return spotipy_client, pl_idx
 
 
-sp_client, PL_IDX = init_spotipy(CREDENTIALS_JSON)
+sp_client, PL_IDX = init_spotipy()
 print('\n...\n')
 results_tracks, is_bjork_inspo = get_playlists_data(sp_client, PLAYLISTS_JSON, PL_IDX)
 tracks_data = map_track_details(results_tracks, is_bjork_inspo)
