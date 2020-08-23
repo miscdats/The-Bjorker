@@ -1,11 +1,15 @@
 @import url(https://fonts.googleapis.com/css?family=Open+Sans);
 
+/* helpers/grid.css */
+
 .grid {
   margin-left: auto;
   margin-right: auto;
   max-width: 48em;
   width: 90%;
 }
+
+/* helpers/sticky.css */
 
 .sticky {
   position: sticky;
@@ -16,23 +20,30 @@
   top: 0;
 }
 
-* { box-sizing: inherit; margin: 0; padding: 0; border: 0; }
+/* layout/base.css */
 
-html {  box-sizing: border-box;  height: 100%; }
-
-body {
-    font-family: 'Helvetica', sans-serif;
-	background: #000000;
-	color: #aaff58;
-	font-size: 24px;
-	letter-spacing: 1.4px;
-	line-height: 1.75;
-	margin: 0;
-	min-height: 100%;
+* {
+  box-sizing: inherit;
 }
 
+html {
+  box-sizing: border-box;
+  height: 100%;
+}
+
+body {
+	font-family: 'Helvetica', sans-serif;
+	background: #000000;
+	color: #aaff58;
+    line-height: 1.75;
+    margin: 0;
+    min-height: 100%;
+}
+
+/* layout/header.css */
+
 .header {
-  background-color: #fff;
+  background-color: #aaff58;
   padding-bottom: 1em;
   padding-top: 1em;
 }
@@ -54,10 +65,23 @@ body {
   opacity: 1;
 }
 
+/* layout/main.css */
+
 .main {
   padding-top: 6em;
   padding-bottom: 6em;
+  background-color: #000;
 }
+
+/* modules/headline.css */
+
+h1 {
+  margin-bottom: 1.5em;
+  margin-top: 0;
+  color: #aaff58;
+}
+
+/* modules/navigation.css */
 
 .navigation a {
   color: inherit;
@@ -66,8 +90,8 @@ body {
 }
 
 .navigation .is-active {
-  background-color: #000;
-  color: #fff;
+  background-color: #000000;
+  color: #aaff58;
   padding-left: 1em;
   padding-right: 1em;
   border-radius: 999px;
@@ -86,6 +110,8 @@ body {
 .navigation__item {
   margin: 0.5em;
 }
+
+/* modules/login.css */
 
 .login {
 	/*position: absolute;*/
@@ -106,12 +132,12 @@ body {
 }
 
 input {
-	width: 300px;
+	/*width: 300px;*/
 	margin-bottom: 10px;
 	background: rgba(0,0,0,0.3);
 	outline: none;
 	padding: 10px;
-	font-size: 13px;
+	font-size: 1em;
 	color: #aaff58;
 	text-shadow: 1px 1px 1px rgba(0,0,0,0.3);
 	border: 1px solid rgba(0,0,0,0.3);
@@ -123,6 +149,8 @@ input {
 	-ms-transition: box-shadow .5s ease;
 	transition: box-shadow .5s ease;
 }
+
+/* modules/resulting.css */
 
 .resulting {
 	overflow: auto;
@@ -150,4 +178,12 @@ tr, td {
 	/*width: 100%;*/
 	margin-bottom: 10px;
 	font-size: 1em;
+}
+
+/* modules/paragraph.css */
+
+p {
+  margin-bottom: 1.5em;
+  margin-top: 1.5em;
+  color: #aaff58;
 }
