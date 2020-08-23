@@ -8,7 +8,7 @@ import pickle
 app = Flask(__name__)
 DIRT = os.path.dirname(__file__)
 
-model_filename = os.path.join(DIRT, '/app/model/model.pkl')
+model_filename = os.path.join(DIRT, '/app/app/model/model.pkl')
 if not os.path.isfile(model_filename):
     request_training()
 model = pickle.load(open(model_filename, 'rb'))
