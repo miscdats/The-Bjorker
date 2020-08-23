@@ -1,6 +1,6 @@
 @import url(https://fonts.googleapis.com/css?family=Open+Sans);
 
-html { width: 100%; height:100%; overflow:hidden; }
+html { width: 100%; height:100%; overflow:auto; }
 
 body {
 	width: 100%;
@@ -49,11 +49,18 @@ input {
 }
 
 table {
-	font-size: 12px;
 	width: 100%;
 }
 
-tr, td, th {
+th {
+	padding: 15px;
+	font-size: 18px;
+	height: auto;
+	width: auto;
+}
+
+tr, td {
+	height: 100%;
 	width: 100%;
 	margin-bottom: 10px;
 	font-size: 13px;
