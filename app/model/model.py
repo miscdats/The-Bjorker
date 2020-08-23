@@ -1,11 +1,13 @@
+import os
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.preprocessing import StandardScaler
 import pandas as pd
 import numpy as np
 import pickle
 
-PLAYLIST_BJORK_CSV = './model/playlist_0.csv'  # size : 174
-PLAYLIST_ENTERED_CSV = './model/playlist_1.csv'
+DIRT = os.path.dirname(__file__)
+PLAYLIST_BJORK_CSV = os.path.join(DIRT, 'playlist_0.csv')  # size : 174
+PLAYLIST_ENTERED_CSV = os.path.join(DIRT, 'playlist_1.csv')
 PLS = [PLAYLIST_BJORK_CSV, PLAYLIST_ENTERED_CSV]
 
 
