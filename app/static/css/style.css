@@ -34,7 +34,6 @@ html {
 body {
 	font-family: 'Helvetica', sans-serif;
 	background: #000000;
-	color: #aaff58;
     line-height: 1.75;
     margin: 0;
     min-height: 100%;
@@ -126,13 +125,12 @@ h1 {
 	color: #aaff58;
 	text-shadow: 0 0 10px rgba(0,0,0,0.5);
 	letter-spacing:1px;
-	text-align:center;
 	margin-bottom: 1.5em;
 	margin-top: 0;
 }
 
 input {
-	/*width: 300px;*/
+	width: auto;
 	margin-bottom: 10px;
 	background: rgba(0,0,0,0.3);
 	outline: none;
@@ -167,13 +165,16 @@ table {
 
 th {
 	padding: 0;
+	color: #aaff58;
 	font-size: 1.2em;
+    margin-bottom: 15px;
 	/*height: auto;*/
 	/*width: auto;*/
 }
 
 tr, td {
 	padding: 0;
+	color: #aaff58;
 	/*height: 100%;*/
 	/*width: 100%;*/
 	margin-bottom: 10px;
