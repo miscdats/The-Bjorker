@@ -19,7 +19,7 @@
     <nav class="navigation">
       <ul class="navigation__list navigation__list--inline">
         <li class="navigation__item"><a href="https://bjorker.herokuapp.com" class="is-active">Home</a></li>
-        <li class="navigation__item"><a href="https://taupier.dev">About</a></li>
+        <li class="navigation__item"><a href="https://taupier.dev">Author</a></li>
         <li class="navigation__item"><a href="mailto:bjorker@taupier.dev">Contact</a></li>
       </ul>
     </nav>
@@ -38,7 +38,7 @@
         <form action="{{ url_for('predict')}}" method="post">
     <!--    	<input type="text" name="bjork_playlist_uri" placeholder="bjork_playlist_uri" required="required" />-->
             <label>
-                <input type="text" name="yourPL" placeholder="playlist URI" required="required" />
+                <input type="text" name="yourPL" placeholder="Spotify playlist URI" required="required" />
             </label>
             <!--		<input type="text" name="sales in second month" placeholder="sales in second month" required="required" />-->
             <button type="submit" class="btn btn-primary btn-block btn-large">Predict on our queen</button>
@@ -46,7 +46,7 @@
      </div>
 
      <div class="resulting">
-       {{ prediction_text }}
+         <p>{{ prediction_text }}</p>
          <br>
              <table>
                 <tr>
