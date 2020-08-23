@@ -79,12 +79,12 @@ def dump(trained_model):
     """Use pickling to write our Python object model to file for later use."""
     pikleez = os.path.join(DIRT, 'model.pkl')
     pickle.dump(trained_model, open(pikleez, 'wb'))
-    print('Pickled : model.pkl')
+    print('Pickled : ', pikleez)
 
 
 def make_from_scratch():
     """The main event. Loads up data, trains model."""
-    print('START!')
+    print('START from scratch!')
     songs, predictable = load_dfs()
     X_train, X_test, y_train, y_test = split_x_y(songs, predictable)
     return X_train, X_test, y_train, songs
