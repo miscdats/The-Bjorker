@@ -3,3 +3,4 @@ pandas
 spotipy
 numpy
 flask
+sklearn
