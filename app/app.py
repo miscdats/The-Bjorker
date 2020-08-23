@@ -33,8 +33,8 @@ def predict():
     # return render_template('index.html', prediction_text='Bjork would be inspired?\n {}'.format(output))
     # link_column is the column that I want to add a button to
     return render_template("index.html", prediction_text='Would Bjork feel inspired from your choices?',
-                           row_data=list(output.values.tolist()),
-                           zip=zip)  # link_column="Song ID/URI?", column_names=output.columns.values,
+                           column_names=output.columns.values, row_data=list(output.values.tolist()),
+                           zip=zip)  # link_column="Song ID/URI?",
 
 
 @app.route('/results', methods=['POST'])
