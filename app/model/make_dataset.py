@@ -2,7 +2,7 @@ import os
 from dotenv import load_dotenv, find_dotenv
 import spotipy
 from spotipy.oauth2 import SpotifyClientCredentials
-from .model.fetch_details import *
+from .fetch_details import *
 
 
 load_dotenv(find_dotenv())
