@@ -1,4 +1,4 @@
-from .model.model import return_predictable_data, request_training
+from app.model.model import return_predictable_data, request_training
 
 
 def make_prediction(trained_model, X_test):
