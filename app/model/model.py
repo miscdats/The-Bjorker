@@ -4,8 +4,8 @@ import pandas as pd
 import numpy as np
 import pickle
 
-PLAYLIST_BJORK_CSV = 'model/playlist_0.csv'  # size : 174
-PLAYLIST_ENTERED_CSV = 'model/playlist_1.csv'
+PLAYLIST_BJORK_CSV = 'playlist_0.csv'  # size : 174
+PLAYLIST_ENTERED_CSV = 'playlist_1.csv'
 PLS = [PLAYLIST_BJORK_CSV, PLAYLIST_ENTERED_CSV]
 
 
