@@ -77,7 +77,8 @@ def load_dfs():
 
 def dump(trained_model):
     """Use pickling to write our Python object model to file for later use."""
-    pickle.dump(trained_model, open('model/model.pkl', 'wb'))
+    pikleez = os.path.join(DIRT, 'model.pkl')
+    pickle.dump(trained_model, open(pikleez, 'wb'))
     print('Pickled : model.pkl')
 
 
