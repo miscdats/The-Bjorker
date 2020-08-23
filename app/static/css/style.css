@@ -15,8 +15,8 @@ body {
 }
 .login {
 	position: absolute;
-	top: 40%;
-	left: 50%;
+	top: 33%;
+	left: 33%;
 	margin: -150px 0 0 -150px;
 	width:400px;
 	height:400px;
@@ -48,13 +48,20 @@ input {
 	transition: box-shadow .5s ease;
 }
 
+#resulting {
+	overflow-y: auto;
+	position: relative;
+	top: 40%;
+	right: 33%;
+}
+
 table {
 	width: 100%;
 }
 
 th {
 	padding: 15px;
-	font-size: 18px;
+	font-size: 20px;
 	height: auto;
 	width: auto;
 }
