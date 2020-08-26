@@ -13,6 +13,8 @@ if not os.path.isfile(model_filename):
     request_training()
 model = pickle.load(open(model_filename, 'rb'))
 
+# TODO : add 404 page
+
 
 @app.route('/')
 def home():
@@ -47,6 +49,12 @@ def results():
     # output = get_predictions(model)
     output = ' Hello!'
     return jsonify(output)
+
+
+@app.route('/.well-known/acme-challenge/kKVx4dguyx1hNIyiGLgiZPqdtLQ9J6D2lEEvBO_uQ7M', methods=['GET'])
+    def cert():
+        out = 'kKVx4dguyx1hNIyiGLgiZPqdtLQ9J6D2lEEvBO_uQ7M'
+        return out
 
 
 if __name__ == "__main__":
