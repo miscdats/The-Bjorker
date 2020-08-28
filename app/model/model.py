@@ -80,7 +80,7 @@ def train_model(X_train, y_train):
 def load_dfs():
     """Helper driver function to get in our data for modeling."""
     print('Get our data and make it usable.')
-    
+
     all_songs_df = get_songs_frame(PLS)
     trainable, predictable = clean(all_songs_df)
 

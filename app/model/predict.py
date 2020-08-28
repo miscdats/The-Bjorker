@@ -1,4 +1,6 @@
 from .model import return_predictable_data
+from .make_dataset import playlist_loader
+import json
 
 
 def make_prediction(trained_model, X_test):
@@ -23,12 +25,32 @@ def displayable_prediction(songs, trained):
     return final_prediction[175:]  # TODO : refactor after form features added/fixed
 
 
-def get_predictions(trained_model):
+def get_predictions(trained_model, user_playlist_uri):
     """Gets formatted data and uses our trained model, returns predictions in displayable format."""
-    print('Getting a call to our model.')
+    print('Getting a call to our model for playlist : ', user_playlist_uri)
 
+    use_user_provided_uri(user_playlist_uri)
+    playlist_loader()
     X_test, songs = return_predictable_data()
     final_predictions = make_prediction(trained_model, X_test)
     display_pred_df = displayable_prediction(songs, final_predictions)
 
     return display_pred_df
+
+
+def use_user_provided_uri(user_playlist_uri):
+    """Grabs provided URI for Spotify playlist from user input and saves as JSON file
+    for predicting on with our model, main use case."""
+    json_data = \
+        [
+            {
+                "uri": "spotify:playlist:1VBK0TxoYVEbnfFl6VCtEu",
+                "bjork_inspo": True
+            },
+            {
+                "uri": user_playlist_uri,
+                "bjork_inspo": False
+            }
+        ]
+    with open('playlists_bjork_me.json', 'w') as json_file:
+        json.dump(json_data, json_file)

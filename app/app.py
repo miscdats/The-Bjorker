@@ -30,7 +30,8 @@ def predict():
     # prediction = model.predict(final_features)
     # output = round(prediction[0], 2)
 
-    output = get_predictions(model)
+    print('User input: ', int_features)
+    output = get_predictions(model, int_features[0])
 
     # return render_template('index.html', prediction_text='Bjork would be inspired?\n {}'.format(output))
     # link_column is the column that I want to add a button to
