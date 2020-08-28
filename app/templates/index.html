@@ -33,18 +33,24 @@
   <div class="grid">
     <div class="login">
         <h1>The Bjorker</h1>
+        <p>1. Select a Spotify playlist URI to use, put in box.</p>
+        <p>2. Click Send button to analyze your tracks.</p>
+        <p>3. Afterwards, use Predict button to check your tastes against Bjork's!</p>
 
          <!-- Main Input For Receiving Query to our ML -->
-        <form action="{{ url_for('predict')}}" method="post">
-    <!--    	<input type="text" name="bjork_playlist_uri" placeholder="bjork_playlist_uri" required="required" />-->
+        <form action="{{ url_for('analyze')}}" method="post">
             <label>
                 <input type="text" name="yourPL" placeholder="Spotify playlist URI" required="required" />
             </label>
-            <!--		<input type="text" name="sales in second month" placeholder="sales in second month" required="required" />-->
-            <button type="submit" class="btn btn-primary btn-block btn-large">Predict on our queen</button>
+            <button type="submit" class="btn btn-primary btn-block btn-large">Send URI for Analysis</button>
+        </form>
+
+        <form action="{{ url_for('predict')}}" method="post">
+            <button type="submit" class="btn btn-primary btn-block btn-large">Predict for our queen!</button>
         </form>
      </div>
 
+    <!--   Results   -->
      <div class="resulting">
          <p>{{ prediction_text }}</p>
          <br>
