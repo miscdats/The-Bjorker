@@ -3,6 +3,7 @@ import os
 from flask import Flask, request, jsonify, render_template
 from .model.model import request_training
 from .model.predict import get_predictions, send_for_analysis
+from .model.make_dataset import playlist_analysis
 import pickle
 
 app = Flask(__name__)
@@ -21,13 +22,19 @@ def home():
     return render_template('index.html')
 
 
-@app.route('/analyze', methods=['POST'])
-def analyze():
+@app.route('/datafy', methods=['POST'])
+def datafy():
     int_features = [x for x in request.form.values()]
     print('User input: ', int_features)
     send_for_analysis(int_features[0])
 
     return render_template('index.html', prediction_text='Sending for analysis...')
+
+
+@app.route('/analyze', methods=['POST'])
+def analyze():
+    playlist_analysis()
+    return render_template('index.html', prediction_text='Analyzing tracks...')
 
 
 @app.route('/predict', methods=['POST'])
