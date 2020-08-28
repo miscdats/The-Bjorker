@@ -12,5 +12,9 @@ free to keep trying different playlists!
 - More!
 
 ## To Run
-```python app.py``` to start the local server
-```localhost:5000``` to reach in your browser
+```python app.py``` 
+to start the local server
+```localhost:5000``` 
+to reach in your browser
+
+App currently deployed on heroku.
