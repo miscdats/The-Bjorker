@@ -14,25 +14,25 @@ PLAYLISTS_JSON = 'playlists_bjork_me.json'
 # Spotify init with credentials
 def init_spotipy():
     """Load credentials from JSON into Spotify client manager and start a session."""
-    print('Starting spotipy session.')
+    print('Starting spotipy session with secrets.')
+
     client_id = os.environ['CLIENT_ID']
     client_secret = os.environ['CLIENT_SECRET']
     client_credentials_manager = SpotifyClientCredentials(client_id=client_id, client_secret=client_secret)
     spotipy_client = spotipy.Spotify(client_credentials_manager=client_credentials_manager)
     pl_idx = 1  # 0 bjork, 1 other
+
     return spotipy_client, pl_idx
 
 
-sp_client, PL_IDX = init_spotipy()
-print('\n...\n')
-results_tracks, is_bjork_inspo = get_playlists_data(sp_client, PLAYLISTS_JSON, PL_IDX)
-tracks_data = map_track_details(results_tracks, is_bjork_inspo)
-tracks_df = features_to_frame(sp_client, tracks_data['id'])
-tracks_df_merged = merge_data(tracks_df, tracks_data)
-tracks_analyzed_df = get_analyses(sp_client, tracks_df_merged)
+def playlist_loader():
+    sp_client, PL_IDX = init_spotipy()
+    print('\n...\n')
+    results_tracks, is_bjork_inspo = get_playlists_data(sp_client, PLAYLISTS_JSON, PL_IDX)
+    tracks_data = map_track_details(results_tracks, is_bjork_inspo)
+    tracks_df = features_to_frame(sp_client, tracks_data['id'])
+    tracks_df_merged = merge_data(tracks_df, tracks_data)
+    tracks_analyzed_df = get_analyses(sp_client, tracks_df_merged)
 
-print(tracks_analyzed_df.tail(2))
-print('Saving tracks analysis to CSV...')
-save_details_to_csv(tracks_analyzed_df, PL_IDX)
-
-print('Al dente!')
+    save_details_to_csv(tracks_analyzed_df, PL_IDX)
+    print('Saving tracks analysis to CSVs : Al dente!')
