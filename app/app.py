@@ -52,9 +52,9 @@ def results():
 
 
 @app.route('/.well-known/acme-challenge/kKVx4dguyx1hNIyiGLgiZPqdtLQ9J6D2lEEvBO_uQ7M', methods=['GET'])
-    def cert():
-        out = 'kKVx4dguyx1hNIyiGLgiZPqdtLQ9J6D2lEEvBO_uQ7M'
-        return out
+def cert():
+    out = 'kKVx4dguyx1hNIyiGLgiZPqdtLQ9J6D2lEEvBO_uQ7M'
+    return out
 
 
 if __name__ == "__main__":
