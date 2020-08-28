@@ -14,13 +14,12 @@ PLAYLISTS_JSON = 'playlists_bjork_me.json'
 # Spotify init with credentials
 def init_spotipy():
     """Load credentials from JSON into Spotify client manager and start a session."""
-    print('Starting session.')
+    print('Starting spotipy session.')
     client_id = os.environ['CLIENT_ID']
     client_secret = os.environ['CLIENT_SECRET']
     client_credentials_manager = SpotifyClientCredentials(client_id=client_id, client_secret=client_secret)
     spotipy_client = spotipy.Spotify(client_credentials_manager=client_credentials_manager)
-    print('...')
-    pl_idx = int(input('Which playlist to make CSV? 0 for Bjork, 1 for mine.'))  # 0 bjork, 1 mine
+    pl_idx = 1  # 0 bjork, 1 other
     return spotipy_client, pl_idx
 
 
@@ -32,8 +31,8 @@ tracks_df = features_to_frame(sp_client, tracks_data['id'])
 tracks_df_merged = merge_data(tracks_df, tracks_data)
 tracks_analyzed_df = get_analyses(sp_client, tracks_df_merged)
 
-print(tracks_analyzed_df.tail(5))
-
+print(tracks_analyzed_df.tail(2))
+print('Saving tracks analysis to CSV...')
 save_details_to_csv(tracks_analyzed_df, PL_IDX)
 
 print('Al dente!')

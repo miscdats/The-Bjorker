@@ -8,13 +8,15 @@ import json
 def get_playlists_data(sp, playlists_json, pl_idx):
     """Load JSON list of playlists and fetch tracks data from Spotify."""
     print('Getting playlist data...')
+
     playlist_index = pl_idx
     playlists = json.load(open(playlists_json))
     playlist_uri = playlists[playlist_index]['uri']
     is_bjork_inspo = playlists[playlist_index]['bjork_inspo']
     uri = playlist_uri    # the URI is split by ':'
     playlist_id = uri.split(':')[2]
-    # call upon our client, get more than 99 tracks
+
+    # call upon our client, get around 99 track limit
     offset = 0
     tracks = []
     fields = 'items(track(id,name,artists(name),album(name),uri))'  # query these from Track object
@@ -24,6 +26,7 @@ def get_playlists_data(sp, playlists_json, pl_idx):
         offset = offset + len(response['items'])
         if len(response['items']) == 0:
             break
+
     return tracks, is_bjork_inspo
 
 
@@ -31,6 +34,7 @@ def get_playlists_data(sp, playlists_json, pl_idx):
 def map_track_details(playlist_tracks_data, is_bjork_inspo):
     """Maps attributes for tracks from playlists query results."""
     print('Mapping track details...')
+
     tracks_data = {}
     playlist_tracks_id = []
     playlist_tracks_uri = []
@@ -60,6 +64,7 @@ def map_track_details(playlist_tracks_data, is_bjork_inspo):
     tracks_data['first_artist'] = playlist_tracks_first_artists
     tracks_data['album'] = playlist_tracks_albums
     tracks_data['is_bjork_inspo'] = playlist_bjork_inspo
+
     return tracks_data
 
 
@@ -67,12 +72,16 @@ def map_track_details(playlist_tracks_data, is_bjork_inspo):
 def features_to_frame(sp, tracks_id):
     """Uses Spotify function to extract audio features and returns merged dataframe."""
     print('Putting features in dataframe...')
+
     features = list(map(lambda x: sp.audio_features(x), tracks_id))
     keys = features[0][0].keys()
     feats = []
+
     for f in features:
         feats.append(f[0])
+
     features_df = pd.DataFrame(data=feats, columns=keys)
+
     return features_df
 
 
@@ -80,6 +89,7 @@ def features_to_frame(sp, tracks_id):
 def merge_data(features_df, tracks_data):
     """Cleans up and merges track data into single dataframe."""
     print('Merging all data so far...')
+
     features_df['title'] = tracks_data['title']
     features_df['artist'] = tracks_data['first_artist']
     features_df['all_artists'] = tracks_data['artists']
@@ -91,6 +101,7 @@ def merge_data(features_df, tracks_data):
                                'mode', 'speechiness', 'acousticness',
                                'instrumentalness', 'liveness', 'valence',
                                'tempo', 'duration_ms', 'time_signature']].copy()
+
     return features_df
 
 
@@ -98,6 +109,7 @@ def merge_data(features_df, tracks_data):
 def get_analyses(sp, features_df):
     """Use Spotipy to get audio analysis for each track in dataframe, added as columns."""
     print('Analyze this!')
+
     num_bars = []
     num_sections = []
     num_segments = []
@@ -116,6 +128,7 @@ def get_analyses(sp, features_df):
 
 
 def save_details_to_csv(features_df, playlist_index):
+    """Saves playlist details to CSV, for data used in modeling.."""
     csv_filename = "playlist_" + str(playlist_index) + ".csv"
     print('\nSaving details to : ', csv_filename)
     features_df.to_csv(csv_filename, encoding='utf-8', index="false")
