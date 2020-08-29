@@ -4,6 +4,8 @@ from flask import Flask, request, jsonify, render_template
 from .model.model import request_training
 from .model.predict import get_predictions, send_for_analysis
 import pickle
+from rq import Queue
+from .worker import conn
 
 app = Flask(__name__)
 DIRT = os.path.dirname(__file__)
@@ -25,7 +27,9 @@ def home():
 def analyze():
     int_features = [x for x in request.form.values()]
     print('User input: ', int_features)
-    send_for_analysis(int_features[0])
+
+    q = Queue(connection=conn)
+    q.enqueue(send_for_analysis(int_features[0]))
 
     return render_template('index.html', prediction_text='Analyzing tracks...')
 

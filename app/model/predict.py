@@ -1,8 +1,6 @@
 from .model import return_predictable_data
 from .make_dataset import playlist_loader
 import json
-from rq import Queue
-from app.worker import conn
 
 
 def make_prediction(trained_model, X_test):
@@ -45,8 +43,7 @@ def send_for_analysis(user_playlist_uri):
     print('Sending user input for analysis...')
 
     use_user_provided_uri(user_playlist_uri)
-    q = Queue(connection=conn)
-    q.enqueue(playlist_loader())
+    playlist_loader()
 
 
 def use_user_provided_uri(user_playlist_uri):
