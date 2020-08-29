@@ -130,4 +130,4 @@ dmypy.json
 
 .idea/
 model/authorization.json
-!/app/model/playlist_1.csv
+!/src/model/playlist_1.csv
