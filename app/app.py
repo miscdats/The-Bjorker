@@ -1,5 +1,4 @@
 import os
-# import numpy as np
 from flask import Flask, request, jsonify, render_template
 from .model.model import request_training
 from .model.predict import get_predictions, send_for_analysis
@@ -9,6 +8,7 @@ from .worker import conn
 
 app = Flask(__name__)
 DIRT = os.path.dirname(__file__)
+q = Queue(connection=conn)
 
 model_filename = os.path.join(DIRT, '/app/app/model/model.pkl')
 if not os.path.isfile(model_filename):
@@ -16,6 +16,16 @@ if not os.path.isfile(model_filename):
 model = pickle.load(open(model_filename, 'rb'))
 
 # TODO : add 404 page
+
+
+def get_status(job):
+    status = {
+        'id': job.id,
+        'result': job.result,
+        'status': 'failed' if job.is_failed else 'pending' if job.result == None else 'completed'
+    }
+    status.update(job.meta)
+    return status
 
 
 @app.route('/')
@@ -28,10 +38,19 @@ def analyze():
     int_features = [x for x in request.form.values()]
     print('User input: ', int_features)
 
-    q = Queue(connection=conn)
-    q.enqueue(send_for_analysis(int_features[0]))
+    query_id = request.args.get('job')
+    if query_id:
+        found_job = q.fetch_job(query_id)
+        if found_job:
+            output = get_status(found_job)
+        else:
+            output = {'id': None, 'error_message': 'No job exists with the id number ' + query_id}
+    else:
+        new_job = q.enqueue(send_for_analysis, int_features[0])
+        output = get_status(new_job)
 
-    return render_template('index.html', prediction_text='Analyzing tracks...')
+    return render_template('index.html', prediction_text='Analyzing tracks...',
+                           column_names=jsonify(output))
 
 
 @app.route('/predict', methods=['POST'])
@@ -65,4 +84,5 @@ def cert():
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host='0.0.0.0', port=port, debug=True)
