@@ -2,7 +2,7 @@ import os
 import pickle
 from rq import Queue
 from flask import Flask, request, jsonify, render_template
-from app.worker import conn
+from worker import conn
 from app.model.model import request_training
 from app.model.predict import get_predictions, send_for_analysis
 
