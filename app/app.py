@@ -1,16 +1,19 @@
 import os
-import numpy as np
+# import numpy as np
 from flask import Flask, request, jsonify, render_template
 from .model.model import request_training
 from .model.predict import get_predictions
 import pickle
 
 app = Flask(__name__)
+DIRT = os.path.dirname(__file__)
 
-model_filename = 'model/model.pkl'
+model_filename = os.path.join(DIRT, '/app/app/model/model.pkl')
 if not os.path.isfile(model_filename):
     request_training()
 model = pickle.load(open(model_filename, 'rb'))
+
+# TODO : add 404 page
 
 
 @app.route('/')
@@ -27,11 +30,12 @@ def predict():
     # prediction = model.predict(final_features)
     # output = round(prediction[0], 2)
 
-    output = get_predictions(model)
+    print('User input: ', int_features)
+    output = get_predictions(model, int_features[0])
 
     # return render_template('index.html', prediction_text='Bjork would be inspired?\n {}'.format(output))
     # link_column is the column that I want to add a button to
-    return render_template("index.html", prediction_text='Bjork feels... Inspired?',
+    return render_template("index.html", prediction_text='Would Bjork feel inspired from your choices?',
                            column_names=output.columns.values, row_data=list(output.values.tolist()),
                            zip=zip)  # link_column="Song ID/URI?",
 
@@ -46,6 +50,12 @@ def results():
     # output = get_predictions(model)
     output = ' Hello!'
     return jsonify(output)
+
+
+@app.route('/.well-known/acme-challenge/kKVx4dguyx1hNIyiGLgiZPqdtLQ9J6D2lEEvBO_uQ7M', methods=['GET'])
+def cert():
+    out = 'kKVx4dguyx1hNIyiGLgiZPqdtLQ9J6D2lEEvBO_uQ7M'
+    return out
 
 
 if __name__ == "__main__":
