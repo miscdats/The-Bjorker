@@ -2,13 +2,13 @@ import os
 import pickle
 from rq import Queue
 from flask import Flask, request, jsonify, render_template
-from app import worker
+from app.worker import conn
 from app.model.model import request_training
 from app.model.predict import get_predictions, send_for_analysis
 
 app = Flask(__name__)
 DIRT = os.path.dirname(__file__)
-q = Queue(connection=worker.conn)
+q = Queue(connection=conn)
 
 model_filename = os.path.join(DIRT, '/app/app/model/model.pkl')
 if not os.path.isfile(model_filename):
