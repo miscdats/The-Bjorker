@@ -11,11 +11,12 @@ def make_prediction(trained_model, X_test):
 
 
 def displayable_prediction(songs, trained):
-    """Modify the datasets with track predictions for display, prints then returns it back."""
+    """Modify the datasets with track predictions for display,
+    prints then returns it back."""
     print('Reformatting predicted data for display...')
 
     final_prediction = songs.copy()
-    final_prediction['song'] = songs['artist'].map(str) + ' - ' + songs['title'].map(str)
+    final_prediction['song'] = songs['artist'].map(str) + ' | ' + songs['title'].map(str)
     final_prediction['inspo?'] = trained
     final_prediction.sort_values('song')
     final_prediction = final_prediction[['song', 'inspo?']]
@@ -25,17 +26,23 @@ def displayable_prediction(songs, trained):
     return final_prediction[175:]  # TODO : refactor after form features added/fixed
 
 
-def get_predictions(trained_model, user_playlist_uri):
-    """Gets formatted data and uses our trained model, returns predictions in displayable format."""
-    print('Getting a call to our model for playlist : ', user_playlist_uri)
+def get_predictions(trained_model):
+    """Called by /predict route path. Gets formatted data and uses our trained model,
+    returns predictions in displayable format."""
+    print('Getting a call to our model...')
 
-    use_user_provided_uri(user_playlist_uri)
-    playlist_loader()
     X_test, songs = return_predictable_data()
     final_predictions = make_prediction(trained_model, X_test)
     display_pred_df = displayable_prediction(songs, final_predictions)
 
     return display_pred_df
+
+
+def send_for_analysis(user_playlist_uri):
+    """Called by /analyze route path for user input."""
+    print('Sending user input for analysis...')
+    use_user_provided_uri(user_playlist_uri)
+    playlist_loader()
 
 
 def use_user_provided_uri(user_playlist_uri):
