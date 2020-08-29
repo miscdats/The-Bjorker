@@ -3,8 +3,8 @@ import pickle
 from rq import Queue
 from flask import Flask, request, jsonify, render_template
 from .worker import conn
-from .app.model.model import request_training
-from .app.model.predict import get_predictions, send_for_analysis
+from app.model.model import request_training
+from app.model.predict import get_predictions, send_for_analysis
 
 app = Flask(__name__)
 DIRT = os.path.dirname(__file__)
