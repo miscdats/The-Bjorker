@@ -1,2 +1,2 @@
 web: gunicorn wsgi:app --preload
-worker: python app/worker.py
+worker: python src/worker.py
