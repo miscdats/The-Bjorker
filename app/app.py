@@ -25,10 +25,9 @@ def home():
 def analyze():
     int_features = [x for x in request.form.values()]
     print('User input: ', int_features)
-    done = send_for_analysis(int_features[0])
+    send_for_analysis(int_features[0])
 
-    return render_template('index.html', prediction_text='Analyzing tracks...',
-                           column_names=done)
+    return render_template('index.html', prediction_text='Analyzing tracks...')
 
 
 @app.route('/predict', methods=['POST'])

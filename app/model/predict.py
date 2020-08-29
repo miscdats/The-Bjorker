@@ -46,8 +46,7 @@ def send_for_analysis(user_playlist_uri):
 
     use_user_provided_uri(user_playlist_uri)
     q = Queue(connection=conn)
-    result = q.enqueue(playlist_loader())
-    return result
+    q.enqueue(playlist_loader())
 
 
 def use_user_provided_uri(user_playlist_uri):

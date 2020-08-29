@@ -35,5 +35,4 @@ def playlist_loader():
     tracks_analyzed_df = get_analyses(sp_client, tracks_df_merged)
 
     done = save_details_to_csv(tracks_analyzed_df, PL_IDX)
-    print('Playlist_loader() : Al dente!')
-    return done
+    print('Playlist_loader() : Al dente! ', done)
