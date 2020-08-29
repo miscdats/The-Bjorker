@@ -38,14 +38,17 @@
         <p>3. Afterwards, use Predict button to check your tastes against Bjork's!</p>
 
          <!-- Main Input For Receiving Query to our ML -->
-        <form action="{{ url_for('datafy')}}" method="post">
+<!--        <form action="{{ url_for('datafy')}}" method="post">-->
+<!--            <label>-->
+<!--                <input type="text" name="yourPL" placeholder="Spotify playlist URI" required="required" />-->
+<!--            </label>-->
+<!--            <button type="submit" class="btn btn-primary btn-block btn-large">Send URI</button>-->
+<!--        </form>-->
+
+        <form action="{{ url_for('analyze')}}" method="post">
             <label>
                 <input type="text" name="yourPL" placeholder="Spotify playlist URI" required="required" />
             </label>
-            <button type="submit" class="btn btn-primary btn-block btn-large">Send URI</button>
-        </form>
-
-        <form action="{{ url_for('analyze')}}" method="post">
             <button type="submit" class="btn btn-primary btn-block btn-large">Do analysis</button>
         </form>
      </div>

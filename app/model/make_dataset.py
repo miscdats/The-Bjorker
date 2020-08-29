@@ -2,7 +2,7 @@ import os
 from dotenv import load_dotenv, find_dotenv
 import spotipy
 from spotipy.oauth2 import SpotifyClientCredentials
-from .fetch_details import *
+from app.model.fetch_details import *
 
 
 load_dotenv(find_dotenv())
@@ -32,16 +32,8 @@ def playlist_loader():
     tracks_data = map_track_details(results_tracks, is_bjork_inspo)
     tracks_df = features_to_frame(sp_client, tracks_data['id'])
     tracks_df_merged = merge_data(tracks_df, tracks_data)
-    tracks_df_merged.to_csv('merged.csv', encoding='utf-8')
-
-    print('Tracks saved as merged.csv')
-
-
-def playlist_analysis():
-
-    sp_client = init_spotipy()
-    tracks_df_merged = pd.read_csv('merged.csv')
     tracks_analyzed_df = get_analyses(sp_client, tracks_df_merged)
 
-    save_details_to_csv(tracks_analyzed_df, PL_IDX)
-    print('Playlist_analysis() : Al dente!')
+    done = save_details_to_csv(tracks_analyzed_df, PL_IDX)
+    print('Playlist_loader() : Al dente!')
+    return done

@@ -132,3 +132,4 @@ def save_details_to_csv(features_df, playlist_index):
     csv_filename = "playlist_" + str(playlist_index) + ".csv"
     print('\nSaving details to : ', csv_filename)
     features_df.to_csv(csv_filename, encoding='utf-8', index="false")
+    return csv_filename # when done

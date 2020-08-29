@@ -6,3 +6,4 @@ spotipy
 numpy
 flask
 sklearn
+rq
