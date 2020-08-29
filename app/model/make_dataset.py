@@ -1,7 +1,7 @@
 import os
-from dotenv import load_dotenv, find_dotenv
 import spotipy
 from spotipy.oauth2 import SpotifyClientCredentials
+from dotenv import load_dotenv, find_dotenv
 from app.model.fetch_details import *
 
 

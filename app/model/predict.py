@@ -1,6 +1,6 @@
-from .model import return_predictable_data
-from .make_dataset import playlist_loader
 import json
+from app.model.make_dataset import playlist_loader
+from app.model.model import return_predictable_data
 
 
 def make_prediction(trained_model, X_test):

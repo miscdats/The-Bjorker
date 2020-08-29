@@ -1,10 +1,10 @@
 import os
-from flask import Flask, request, jsonify, render_template
-from .model.model import request_training
-from .model.predict import get_predictions, send_for_analysis
 import pickle
 from rq import Queue
-from .worker import conn
+from flask import Flask, request, jsonify, render_template
+from app.model.model import request_training
+from app.model.predict import get_predictions, send_for_analysis
+from app.worker import conn
 
 app = Flask(__name__)
 DIRT = os.path.dirname(__file__)
