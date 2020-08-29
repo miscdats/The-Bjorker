@@ -50,7 +50,7 @@ def analyze():
         output = get_status(new_job)
 
     return render_template('index.html', prediction_text='Analyzing tracks...',
-                           column_names=jsonify(output))
+                           column_names=[jsonify(output)])
 
 
 @app.route('/predict', methods=['POST'])
