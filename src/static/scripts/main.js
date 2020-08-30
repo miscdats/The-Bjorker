@@ -9,7 +9,7 @@ $('.btn').on('click', function() {
     method: 'POST'
   })
   .done((res) => {
-    getStatus(res.data.task_id)
+    getStatus(res.data.job_id)
   })
   .fail((err) => {
     console.log(err)
@@ -29,11 +29,11 @@ function getStatus(taskID) {
         <td>${res.data.task_result}</td>
       </tr>`
     $('.resulting').prepend(html);
-    const taskStatus = res.data.task_status;
-    if (taskStatus === 'finished' || taskStatus === 'failed') return false;
+    const jobStatus = res.data.job_status;
+    if (jobStatus === 'completed' || jobStatus === 'failed') return false;
     setTimeout(function() {
-      getStatus(res.data.task_id);
-    }, 1000);
+      getStatus(res.data.job_id);
+    }, 1500);
   })
   .fail((err) => {
     console.log(err)

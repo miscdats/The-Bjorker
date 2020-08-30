@@ -35,29 +35,29 @@ def analyze():
         print('User input: ', int_features)
 
         global finished
+        finished = False
         query_id = request.args.get('job')
         if query_id:
             found_job = q.fetch_job(query_id)
             if found_job:
                 output = get_status(found_job)
             else:
-                output = {'id': None,
-                          'error_message': 'No job exists with the id number '
-                                           + query_id}
+                output = return_error(query_id)
         else:
             new_job = q.enqueue(send_for_analysis, int_features[0], model)
             output = get_status(new_job)
-            if output.status == 'completed':
-                finished = True
 
         flash('Analyzing {}... sit tight, might take a minute.'.
               format(int_features))
-        return render_template('loading.html')
+        return render_template('loading.html', job_id=output['data']['job_id'])
 
 
 def get_status(job):
+    """ Periodically checked to return updated job status. """
+    global finished
     status = {
         "status": "completed",
+        "finished": finished,
         "data": {
             'job_id': job.id,  # job.get_id() job.get_status()
             'job_status': 'failed' if job.is_failed else 'pending' if job.result == None else 'completed',
@@ -68,34 +68,36 @@ def get_status(job):
     return status
 
 
+def return_error(job_id):
+    """ Returns error message with invalid job_id status. """
+    global finished
+    res = {
+        "status": "error",
+        "finished": finished,
+        "error_message": 'Job {} not found! '.format(job_id),
+        "data": {
+            "job_id": None,
+            "job_status": "failed"
+        }
+    }
+    return res
+
+
 @app.route('/status/<job_id>', methods=['GET'])
 def process_status(job_id):
     """ Returns the status of the background process worker for given job. """
     job = q.fetch_job(job_id)
     if job:
-        res = {
-            "status": "completed",
-            "data": {
-                "job_id": job.get_id(),
-                "job_status": job.get_status(),
-                "job_result": job.result,
-            }
-        }
+        res = get_status(job)
     else:
-        res = {
-            "status": "error",
-            "error_message": 'Job {} not found! '.format(job_id),
-            "data": {
-                "job_id": None,
-                "job_status": 'failed'
-            }
-        }
+        res = return_error(job_id)
     return jsonify(res)
 
 
 @app.route('/results', methods=['GET', 'POST'])
 def results():
     """ Return result of the large process. """
+    global finished
     output = request.get_json(force=True)
     finished = True
 

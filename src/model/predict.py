@@ -42,9 +42,11 @@ def send_for_analysis(user_playlist_uri, trained_model):
     """Called by /analyze route path for user input."""
     print('Sending user input for analysis...')
 
+    global finished
     use_user_provided_uri(user_playlist_uri)
     playlist_loader()
     get_predictions(trained_model)
+    finished = True
 
 
 def use_user_provided_uri(user_playlist_uri):
