@@ -47,8 +47,8 @@ def analyze():
             new_job = q.enqueue(send_for_analysis, int_features[0], model)
             output = get_status(new_job)
 
-        flash('Analyzing {}... sit tight, might take a minute.'.
-              format(int_features))
+        # flash('Analyzing {}... sit tight, might take a minute.'.
+        #       format(int_features))
         return render_template('loading.html', job_id=output['data']['job_id'])
 
 
