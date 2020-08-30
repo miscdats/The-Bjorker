@@ -1,0 +1,62 @@
+<!DOCTYPE HTML>
+<html lang="en">
+    <head>
+      <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1">
+      <title>The Bjorker - Is the music inspiring?</title>
+        <link href='https://fonts.googleapis.com/css?family=Pacifico' rel='stylesheet' type='text/css'>
+        <link href='https://fonts.googleapis.com/css?family=Arimo' rel='stylesheet' type='text/css'>
+        <link href='https://fonts.googleapis.com/css?family=Hind:300' rel='stylesheet' type='text/css'>
+        <link href='https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300' rel='stylesheet' type='text/css'>
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+        <script src="{{ url_for('static', filename='scripts/loading.js') }}"></script>
+    </head>
+
+    <body>
+
+        <header class="header sticky sticky--top">
+
+          <div class="grid">
+
+            <nav class="navigation">
+              <ul class="navigation__list navigation__list--inline">
+                <li class="navigation__item"><a href="https://bjorker.herokuapp.com" class="is-active">Home</a></li>
+                <li class="navigation__item"><a href="https://taupier.dev">Author</a></li>
+                <li class="navigation__item"><a href="mailto:bjorker@taupier.dev">Contact</a></li>
+              </ul>
+            </nav>
+
+          </div>
+
+        </header>
+
+        <main class="main">
+
+          <div class="grid">
+            <div class="login">
+                <h1>The Bjorker</h1>
+                <p>1. Select a Spotify playlist to use by right clicking on playlist and selecting SHARE then Copy Spotify URI,
+                    paste in box here.</p>
+                <p>2. Click Predict button to analyze your tracks.</p>
+                <p>3. Afterwards, check your tastes against Bjork's!</p>
+
+                 <!-- Main Input For Receiving Query to our ML -->
+                <form action="{{ url_for('home')}}" method="get">
+                    <button type="submit" class="btn btn-primary btn-block btn-large">Go Back</button>
+                </form>
+             </div>
+
+            <!--   Results   -->
+             <div class="resulting">
+                 {% for message in get_flashed_messages() %}
+                    <p style="color: red;">{{ message }}</p>
+                 {% endfor %}}
+
+                 <p>Loading...</p>
+             </div>
+
+          </div>
+        </main>
+
+    </body>
+</html>

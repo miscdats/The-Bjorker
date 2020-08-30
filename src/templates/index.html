@@ -35,25 +35,24 @@
         <h1>The Bjorker</h1>
         <p>1. Select a Spotify playlist to use by right clicking on playlist and selecting SHARE then Copy Spotify URI,
             paste in box here.</p>
-        <p>2. Click Analyze button to analyze your tracks.</p>
-        <p>3. Afterwards, use Predict button to check your tastes against Bjork's!</p>
+        <p>2. Click Predict button to analyze your tracks.</p>
+        <p>3. Afterwards, check your tastes against Bjork's!</p>
 
          <!-- Main Input For Receiving Query to our ML -->
         <form action="{{ url_for('analyze')}}" method="post">
             <label>
                 <input type="text" name="yourPL" placeholder="Spotify playlist URI" required="required" />
             </label>
-            <button type="submit" class="btn btn-primary btn-block btn-large">Analyze</button>
-        </form>
-     </div>
-
-        <form action="{{ url_for('predict')}}" method="post">
-            <button type="submit" class="btn btn-primary btn-block btn-large">Predict for our queen!</button>
+            <button type="submit" class="btn btn-primary btn-block btn-large">Predict</button>
         </form>
      </div>
 
     <!--   Results   -->
      <div class="resulting">
+         {% for message in get_flashed_messages() %}
+            <p style="color: red;">{{ message }}</p>
+         {% endfor %}}
+
          <p>{{ prediction_text }}</p>
          <br>
              <table>

@@ -38,12 +38,13 @@ def get_predictions(trained_model):
     return display_pred_df
 
 
-def send_for_analysis(user_playlist_uri):
+def send_for_analysis(user_playlist_uri, trained_model):
     """Called by /analyze route path for user input."""
     print('Sending user input for analysis...')
 
     use_user_provided_uri(user_playlist_uri)
     playlist_loader()
+    get_predictions(trained_model)
 
 
 def use_user_provided_uri(user_playlist_uri):
