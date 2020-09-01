@@ -59,16 +59,19 @@ def analyze():
 def get_status(job):
     """ Periodically checked to return updated job status. """
     global finished
+    job.refresh()
+    if job.is_finished:
+        finished = True
     status = {
         "status": "completed",
         "finished": str(finished).lower(),
         "data": {
             'job_id': job.id,  # job.get_id() job.get_status()
-            'job_status': 'failed' if job.is_failed else 'pending' if job.result == None else 'completed',
+            'job_status': 'failed' if job.is_failed else job.get_status(),
             'job_result': job.result,
         }
     }
-    status['data'].update(job.meta)
+    status.update(job.meta)
     print('Get_status: ', status)
     return status
 
@@ -109,11 +112,11 @@ def results(job_id):
     global finished
     if request:
         output = request.get_json(force=True)
-        print('Requested: ', output)
+        print('Requested result: ', output)
     else:
         job = q.fetch_job(job_id)
         output = get_status(job)
-        print('Getted: ', output)
+        print('Getted result: ', output)
     finished = True
 
     return render_template("index.html",
