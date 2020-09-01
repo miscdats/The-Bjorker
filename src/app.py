@@ -56,7 +56,7 @@ def analyze():
         return redirect(url_for(analyzing, job_id=query_id))
 
 
-@app.route('/analyzing/<str:job_id>')
+@app.route('/analyzing/<job_id>')
 def analyzing(job_id):
     return render_template('loading.html', job_id=job_id)
 
