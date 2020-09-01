@@ -1,7 +1,7 @@
 import os
 import pickle
 from rq import Queue
-from flask import Flask, request, jsonify, render_template, url_for, send_from_directory
+from flask import Flask, request, jsonify, render_template, url_for, flash, send_from_directory
 from src.model.model import request_training
 from src.model.predict import send_for_analysis
 from src.worker import conn
@@ -15,7 +15,6 @@ if not os.path.isfile(model_filename):
 model = pickle.load(open(model_filename, 'rb'))
 
 q = Queue(connection=conn)
-finished = False
 
 
 @app.route('/', methods=['GET', 'POST'])
@@ -34,8 +33,6 @@ def analyze():
         int_features = [x for x in request.form.values()]
         print('User input: ', int_features)
 
-        global finished
-        finished = False
         query_id = request.args.get('job')
         if query_id:
             found_job = q.fetch_job(query_id)
@@ -51,36 +48,30 @@ def analyze():
         query_id = str(query_id)
         print('Init request: ', output)
         print('Query ID: ', query_id)
-        # flash('Analyzing {}... sit tight, might take a minute.'.
-        #       format(int_features))
+        flash('Analyzing {}... sit tight, takes at least a few seconds.'.
+              format(int_features))
         return render_template('loading.html', job_id=query_id)
 
 
 def get_status(job):
     """ Periodically checked to return updated job status. """
-    global finished
     job.refresh()
     status = {
-        "status": "completed",
-        "finished": str(finished).lower(),
+        "status": "OK",
         "data": {
-            'job_id': job.id,  # job.get_id() job.get_status()
+            'job_id': job.id,  # job.get_id()
             'job_status': 'failed' if job.is_failed else job.get_status(),
         }
     }
     status.update(job.meta)
-    if job.is_finished or job.is_failed:
-        finished = True
     print('Get_status: ', status)
     return status
 
 
 def return_error(job_id):
     """ Returns error message with invalid job_id status. """
-    global finished
     res = {
         "status": "error",
-        "finished": str(finished).lower(),
         "error_message": 'Job {} not found! '.format(job_id),
         "data": {
             "job_id": None,
@@ -118,8 +109,6 @@ def results(job_id):
     row_data = list(output.values.tolist())
     if output is None:
         output = return_error(job)
-        column_names = output['data'].keys()
-        row_data = list(output['data'].values())
         print('return')
 
     return render_template("index.html",
@@ -128,10 +117,7 @@ def results(job_id):
                            row_data=row_data,
                            zip=zip)  # link_column="Song ID/URI?",
     # TODO : add 404 page
-    # TODO : take in these given values to make_dataset and predict on
     # TODO : make available non-bjork?... new model to train
-    # return render_template('index.html',
-    # prediction_text='Bjork would be inspired?\n {}'.format(output))
     # link_column is the column that I want to add a button to
     # return jsonify(output)
 

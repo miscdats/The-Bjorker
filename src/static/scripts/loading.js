@@ -5,7 +5,8 @@ $(document).ready(function() {
           appConfig.process,
           function(data) {
             console.log('Data: ', data);
-            if (data.finished == "true") {
+            let job_status = data.data.job_status;
+            if (job_status == "failed" || job_status == 'finished') {
                 console.log('Results : ' + appConfig.results);
                 window.location.replace(appConfig.results,
                     {job_id:data.data.job_id, job:data});
