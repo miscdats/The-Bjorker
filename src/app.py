@@ -49,7 +49,13 @@ def analyze():
 
         # flash('Analyzing {}... sit tight, might take a minute.'.
         #       format(int_features))
-        return render_template('loading.html', job_id=output['data']['job_id'])
+        return url_for(analyzing, job_id=output['data']['job_id'])
+
+
+@app.route('/analyzing/<job_id>')
+def analyzing(job_id):
+
+    return render_template('loading.html', job_id=job_id)
 
 
 def get_status(job):
@@ -80,7 +86,7 @@ def return_error(job_id):
             "job_status": "failed"
         }
     }
-    return res
+    return jsonify(res)
 
 
 @app.route('/status/<job_id>', methods=['GET'])
@@ -94,8 +100,8 @@ def process_status(job_id):
     return jsonify(res)
 
 
-@app.route('/results', methods=['GET', 'POST'])
-def results():
+@app.route('/results/<job_id>', methods=['GET', 'POST'])
+def results(job_id):
     """ Return result of the large process. """
     global finished
     output = request.get_json(force=True)
