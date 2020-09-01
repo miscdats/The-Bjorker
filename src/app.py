@@ -107,9 +107,11 @@ def results(job_id):
     print('Results for job ID: ', job_id)
 
     global finished
-    output = request.get_json(force=True)
-    if not output:
-        output = process_status(job_id)
+    if request:
+        output = request.get_json(force=True)
+    else:
+        job = q.fetch_job(job_id)
+        output = get_status(job)
     finished = True
 
     return render_template("index.html",
