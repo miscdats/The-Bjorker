@@ -160,11 +160,11 @@ input {
 table {
 	/*width: auto;*/
 	border-collapse: collapse;
-	border-spacing: 0;
+	border-spacing: 5px;
 }
 
 th {
-	padding: 0;
+	padding: 10px;
 	color: #aaff58;
 	font-size: 1.2em;
     margin-bottom: 15px;
@@ -173,7 +173,7 @@ th {
 }
 
 tr, td {
-	padding: 0;
+	padding: 10px;
 	color: #aaff58;
 	/*height: 100%;*/
 	/*width: 100%;*/
