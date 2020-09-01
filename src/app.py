@@ -58,6 +58,7 @@ def analyze():
 
 @app.route('/analyzing/<job_id>')
 def analyzing(job_id):
+    print('Analyzing: ', job_id)
     return render_template('loading.html', job_id=job_id)
 
 
@@ -74,6 +75,7 @@ def get_status(job):
         }
     }
     status['data'].update(job.meta)
+    print('Get_status: ', status)
     return status
 
 
@@ -89,12 +91,14 @@ def return_error(job_id):
             "job_status": "failed"
         }
     }
+    print('Return_error: ', res)
     return jsonify(res)
 
 
 @app.route('/status/<job_id>', methods=['GET'])
 def process_status(job_id):
     """ Returns the status of the background process worker for given job. """
+    print('Process_status: ', job_id)
     job = q.fetch_job(job_id)
     if job:
         res = get_status(job)
@@ -106,6 +110,8 @@ def process_status(job_id):
 @app.route('/results/<job_id>', methods=['GET', 'POST'])
 def results(job_id):
     """ Return result of the large process. """
+    print('Results for job ID: ', job_id)
+
     global finished
     output = request.get_json(force=True)
     if not output:
