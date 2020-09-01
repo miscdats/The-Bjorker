@@ -129,7 +129,12 @@ def get_analyses(sp, features_df):
 
 def save_details_to_csv(features_df, playlist_index):
     """Saves playlist details to CSV, for data used in modeling.."""
+    import os
+    DIRT = os.path.dirname(__file__)
+    FOLDERS = '/app/src/model/'
     csv_filename = "playlist_" + str(playlist_index) + ".csv"
-    print('\nSaving details to : ', csv_filename)
-    features_df.to_csv(csv_filename, encoding='utf-8', index="false")
-    return csv_filename # when done
+    playlist_entered_csv = os.path.join(DIRT, FOLDERS, csv_filename)
+
+    print('\nSaving details to : ', playlist_entered_csv)
+    features_df.to_csv(playlist_entered_csv, encoding='utf-8', index="false")
+    return playlist_entered_csv # when done
