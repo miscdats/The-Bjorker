@@ -7,7 +7,7 @@ $(document).ready(function() {
             console.log('Data: ', data);
             if (data.finished == "true") {
                 console.log('Results : ' + appConfig.results);
-                window.location.replace(results,
+                window.location.replace(appConfig.results,
                     {job_id:data.data.job_id, job:data});
             }
           }
