@@ -46,10 +46,13 @@ def analyze():
         else:
             new_job = q.enqueue(send_for_analysis, int_features[0], model)
             output = get_status(new_job)
+            query_id = output['data']['job_id']
 
+        print('Init status: ', output)
+        print('Query ID: ', query_id)
         # flash('Analyzing {}... sit tight, might take a minute.'.
         #       format(int_features))
-        return url_for(analyzing, job_id=output['data']['job_id'])
+        return url_for(analyzing, job_id=query_id)
 
 
 @app.route('/analyzing/<job_id>')
@@ -105,6 +108,8 @@ def results(job_id):
     """ Return result of the large process. """
     global finished
     output = request.get_json(force=True)
+    if not output:
+        output = process_status(job_id)
     finished = True
 
     return render_template("index.html",
