@@ -12,7 +12,8 @@
         <script type="text/javascript">
             window.appConfig = {
                 job_id: '{{ job_id }}'
-            }
+            };
+            console.log(appConfig);
         </script>
         <script src="{{ url_for('static', filename='scripts/loading.js') }}"></script>
     </head>
