@@ -60,18 +60,18 @@ def get_status(job):
     """ Periodically checked to return updated job status. """
     global finished
     job.refresh()
-    if job.is_finished:
-        finished = True
     status = {
         "status": "completed",
         "finished": str(finished).lower(),
         "data": {
             'job_id': job.id,  # job.get_id() job.get_status()
             'job_status': 'failed' if job.is_failed else job.get_status(),
-            'job_result': job.result,
+            'job_result': job.return_value,
         }
     }
     status.update(job.meta)
+    if job.is_finished:
+        finished = True
     print('Get_status: ', status)
     return status
 
@@ -108,21 +108,21 @@ def process_status(job_id):
 def results(job_id):
     """ Return result of the large process. """
     print('Results for job ID: ', job_id)
-
-    global finished
-    if request:
-        output = request.get_json(force=True)
-        print('Requested result: ', output)
-    else:
-        job = q.fetch_job(job_id)
-        output = get_status(job)
-        print('Getted result: ', output)
-    finished = True
+    # output = request.get_json(force=True)
+    # if output:
+    #     print('Requested result: ', output)
+    # else:
+    job = q.fetch_job(job_id)
+    output = job.result
+    if output is None:
+        output = job.return_value
+        print('return')
+    print('Fetched result: ', output)
 
     return render_template("index.html",
                            prediction_text='Would Bjork feel inspired from your choices?',
-                           column_names=output['data'].columns.values,
-                           row_data=list(output['data'].values.tolist()),
+                           column_names=output.columns.values,
+                           row_data=list(output.values.tolist()),
                            zip=zip)  # link_column="Song ID/URI?",
     # TODO : add 404 page
     # TODO : take in these given values to make_dataset and predict on
