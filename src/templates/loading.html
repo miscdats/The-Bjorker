@@ -9,6 +9,11 @@
         <link href='https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300' rel='stylesheet' type='text/css'>
         <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+        <script type="text/javascript">
+            window.appConfig = {
+                job_id: '{{ job_id }}'
+            }
+        </script>
         <script src="{{ url_for('static', filename='scripts/loading.js') }}"></script>
     </head>
 

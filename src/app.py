@@ -53,13 +53,7 @@ def analyze():
         print('Query ID: ', query_id)
         # flash('Analyzing {}... sit tight, might take a minute.'.
         #       format(int_features))
-        return redirect(url_for('analyzing', job_id=query_id))
-
-
-@app.route('/analyzing/<job_id>')
-def analyzing(job_id):
-    print('Analyzing: ', job_id)
-    return render_template('loading.html', job_id=job_id)
+        return render_template('loading.html', job_id=query_id)
 
 
 def get_status(job):
@@ -67,7 +61,7 @@ def get_status(job):
     global finished
     status = {
         "status": "completed",
-        "finished": finished,
+        "finished": str(finished).lower(),
         "data": {
             'job_id': job.id,  # job.get_id() job.get_status()
             'job_status': 'failed' if job.is_failed else 'pending' if job.result == None else 'completed',
@@ -84,7 +78,7 @@ def return_error(job_id):
     global finished
     res = {
         "status": "error",
-        "finished": finished,
+        "finished": str(finished).lower(),
         "error_message": 'Job {} not found! '.format(job_id),
         "data": {
             "job_id": None,
