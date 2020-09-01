@@ -48,16 +48,16 @@ def analyze():
             output = get_status(new_job)
             query_id = output['data']['job_id']
 
-        print('Init status: ', output)
+        query_id = str(query_id)
+        print('Init request: ', output)
         print('Query ID: ', query_id)
         # flash('Analyzing {}... sit tight, might take a minute.'.
         #       format(int_features))
-        return url_for(analyzing, job_id=query_id)
+        return redirect(url_for(analyzing, job_id=query_id))
 
 
-@app.route('/analyzing/<job_id>')
+@app.route('/analyzing/<str:job_id>')
 def analyzing(job_id):
-
     return render_template('loading.html', job_id=job_id)
 
 
