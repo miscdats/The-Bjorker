@@ -69,7 +69,7 @@ def get_status(job):
         }
     }
     status.update(job.meta)
-    if job.is_finished:
+    if job.is_finished or job.is_failed:
         finished = True
     print('Get_status: ', status)
     return status
