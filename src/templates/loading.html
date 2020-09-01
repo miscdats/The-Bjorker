@@ -12,7 +12,9 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
         <script type="text/javascript">
             window.appConfig = {
-                job_id: '{{ job_id }}'
+                job_id: '{{ job_id }}',
+                process: "{{ url_for('process_status', job_id=job_id) }}",
+                results: "{{ url_for('results', job_id=job_id) }}"
             };
             console.log(appConfig);
         </script>

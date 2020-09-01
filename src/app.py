@@ -109,15 +109,17 @@ def results(job_id):
     global finished
     if request:
         output = request.get_json(force=True)
+        print('Requested: ', output)
     else:
         job = q.fetch_job(job_id)
         output = get_status(job)
+        print('Getted: ', output)
     finished = True
 
     return render_template("index.html",
                            prediction_text='Would Bjork feel inspired from your choices?',
-                           column_names=output.result.columns.values,
-                           row_data=list(output.result.values.tolist()),
+                           column_names=output['data'].columns.values,
+                           row_data=list(output['data'].values.tolist()),
                            zip=zip)  # link_column="Song ID/URI?",
     # TODO : add 404 page
     # TODO : take in these given values to make_dataset and predict on
