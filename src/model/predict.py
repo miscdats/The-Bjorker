@@ -45,8 +45,10 @@ def send_for_analysis(user_playlist_uri, trained_model):
     global finished
     use_user_provided_uri(user_playlist_uri)
     playlist_loader()
-    get_predictions(trained_model)
+    display_pred_df = get_predictions(trained_model)
+
     finished = True
+    return display_pred_df
 
 
 def use_user_provided_uri(user_playlist_uri):
