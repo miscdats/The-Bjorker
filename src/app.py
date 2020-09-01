@@ -66,7 +66,6 @@ def get_status(job):
         "data": {
             'job_id': job.id,  # job.get_id() job.get_status()
             'job_status': 'failed' if job.is_failed else job.get_status(),
-            'job_result': job.return_value,
         }
     }
     status.update(job.meta)
