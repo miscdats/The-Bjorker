@@ -6,7 +6,9 @@ from ..model.fetch_details import *
 
 
 load_dotenv(find_dotenv())
-PLAYLISTS_JSON = 'playlists_bjork_me.json'
+filename = 'playlists_bjork_me.json'
+DIRT = os.path.dirname(__file__)
+PLAYLISTS_JSON = os.path.join(DIRT, '/app/src/model/', filename)
 PL_IDX = 1  # 0 bjork, 1 other
 
 

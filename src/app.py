@@ -113,15 +113,19 @@ def results(job_id):
     # else:
     job = q.fetch_job(job_id)
     output = job.result
-    if output is None:
-        output = job.return_value
-        print('return')
     print('Fetched result: ', output)
+    column_names = output.columns.values
+    row_data = list(output.values.tolist())
+    if output is None:
+        output = return_error(job)
+        column_names = output['data'].keys()
+        row_data = list(output['data'].values())
+        print('return')
 
     return render_template("index.html",
                            prediction_text='Would Bjork feel inspired from your choices?',
-                           column_names=output.columns.values,
-                           row_data=list(output.values.tolist()),
+                           column_names=column_names,
+                           row_data=row_data,
                            zip=zip)  # link_column="Song ID/URI?",
     # TODO : add 404 page
     # TODO : take in these given values to make_dataset and predict on

@@ -1,4 +1,5 @@
 import json
+import os
 from ..model.make_dataset import playlist_loader
 from ..model.model import return_predictable_data
 
@@ -54,6 +55,9 @@ def send_for_analysis(user_playlist_uri, trained_model):
 def use_user_provided_uri(user_playlist_uri):
     """Grabs provided URI for Spotify playlist from user input and saves as JSON file
     for predicting on with our model, main use case."""
+    filename = 'playlists_bjork_me.json'
+    DIRT = os.path.dirname(__file__)
+    playlists_filename = os.path.join(DIRT, '/app/src/model/', filename)
     json_data = \
         [
             {
@@ -65,5 +69,6 @@ def use_user_provided_uri(user_playlist_uri):
                 "bjork_inspo": False
             }
         ]
-    with open('playlists_bjork_me.json', 'w') as json_file:
+    with open(playlists_filename, 'w') as json_file:
+        print('Dumping: ', playlists_filename)
         json.dump(json_data, json_file)
