@@ -1,9 +1,9 @@
 import os
 import pickle
 from rq import Queue
-from flask import Flask, request, jsonify, render_template, flash, redirect, url_for
+from flask import Flask, request, jsonify, render_template, url_for, send_from_directory
 from src.model.model import request_training
-from src.model.predict import get_predictions, send_for_analysis
+from src.model.predict import send_for_analysis
 from src.worker import conn
 
 app = Flask(__name__)
@@ -135,6 +135,12 @@ def cert():
     # TODO : rerun cert program
     out = 'kKVx4dguyx1hNIyiGLgiZPqdtLQ9J6D2lEEvBO_uQ7M'
     return out
+
+
+@app.route('/favicon.ico')
+def favicon():
+    return send_from_directory(os.path.join(app.root_path, 'static', 'img'),
+                               'favicon.ico', mimetype='image/png')
 
 
 if __name__ == "__main__":
