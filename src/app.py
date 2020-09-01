@@ -28,7 +28,7 @@ def home():
 def analyze():
     """ Starts the main processes, activated by button click submission of URI input. """
     if request.method == 'GET':
-        return url_for(home)
+        return url_for('home')
 
     elif request.method == 'POST':
         int_features = [x for x in request.form.values()]
@@ -53,7 +53,7 @@ def analyze():
         print('Query ID: ', query_id)
         # flash('Analyzing {}... sit tight, might take a minute.'.
         #       format(int_features))
-        return redirect(url_for(analyzing, job_id=query_id))
+        return redirect(url_for('analyzing', job_id=query_id))
 
 
 @app.route('/analyzing/<job_id>')
