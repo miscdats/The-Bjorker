@@ -1,5 +1,6 @@
 import os
 import pickle
+import time
 from rq import Queue
 from flask import Flask, request, jsonify, render_template, url_for, flash, send_from_directory
 from src.model.model import request_training
@@ -48,8 +49,8 @@ def analyze():
         query_id = str(query_id)
         print('Init request: ', output)
         print('Query ID: ', query_id)
-        flash('Analyzing {}... sit tight, takes at least a few seconds.'.
-              format(int_features))
+        time.sleep(2)
+        flash('Analyzing ', int_features, '... sit tight, takes at least a few seconds.')
         return render_template('loading.html', job_id=query_id)
 
 
