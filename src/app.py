@@ -43,7 +43,7 @@ def analyze():
             query_id = str(output['data']['job_id'])
 
         print('Init request: ', output)
-        msg = 'Analyzing ' + int_features + '... sit tight, Spotify takes a few seconds.'
+        msg = 'Analyzing ' + int_features[0] + '... sit tight, Spotify takes a few seconds.'
         flash(message=msg)
         time.sleep(2)
         return render_template('loading.html', job_id=query_id)
