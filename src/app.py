@@ -36,22 +36,28 @@ def analyze():
 
         query_id = request.args.get('job')
         if query_id:
-            found_job = q.fetch_job(query_id)
-            if found_job:
-                output = get_status(found_job)
-            else:
-                output = return_error(query_id)
+            output = check_job(query_id)
         else:
             new_job = q.enqueue(send_for_analysis, int_features[0], model)
             output = get_status(new_job)
-            query_id = output['data']['job_id']
+            query_id = str(output['data']['job_id'])
 
-        query_id = str(query_id)
         print('Init request: ', output)
-        print('Query ID: ', query_id)
+        msg = 'Analyzing ' + int_features + '... sit tight, Spotify takes a few seconds.'
+        flash(message=msg)
         time.sleep(2)
-        flash('Analyzing ', int_features, '... sit tight, takes at least a few seconds.')
         return render_template('loading.html', job_id=query_id)
+
+
+def check_job(query_id):
+    """ Checks for job with query_id or returns error messages."""
+    found_job = q.fetch_job(query_id)
+    if found_job:
+        output = get_status(found_job)
+    else:
+        output = return_error(query_id)
+    return output
+    
 
 
 def get_status(job):
@@ -87,11 +93,7 @@ def return_error(job_id):
 def process_status(job_id):
     """ Returns the status of the background process worker for given job. """
     print('Process_status: ', job_id)
-    job = q.fetch_job(job_id)
-    if job:
-        res = get_status(job)
-    else:
-        res = return_error(job_id)
+    res = check_job(job_id)
     return jsonify(res)
 
 
