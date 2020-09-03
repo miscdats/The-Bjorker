@@ -6,6 +6,7 @@ choice. The songs will be determined as inspiring to Bjork or not quite. The res
 free to keep trying different playlists!
 
 ## Future Features
+- Use URLs as well as URIs as input
 - Able to enter multiple playlists at once
 - Create joint playlists by inspiring tracks
 - Create merged track lists by non-Bjork-approved songs
