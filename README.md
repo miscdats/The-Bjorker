@@ -6,7 +6,7 @@ choice. The songs will be determined as inspiring to Bjork or not quite. The res
 free to keep trying different playlists!
 
 ## Data pipeline
-- Extracts songs data from Spotify using API wrapper Python package ```spotipy``` based on inputs and sets related to this project (Bjork's top 10 inspiring albums dataset part of training and validation set)
+- Extracts songs data from Spotify with ```Redis``` queued workers using API wrapper Python package ```spotipy``` with ```pandas``` based on inputs and sets related to this project (i.e. Bjork's top 10 inspiring albums dataset part of training and validation set)
 - Transforms track analysis data into usable tables, with values rescaled and used to train and test a machine learning model with ```scikit``` and ```keras```
 - Loads downstream data after applying predict functions with model, visualizing test data results in ```Flask``` app deployed on Heroku
 
@@ -19,9 +19,9 @@ free to keep trying different playlists!
 - More!
 
 ## To Run
-```python app.py``` 
-- to start the local server
-```localhost:5000``` 
-- to reach in your browser
+- ```python wsgi.py``` 
+to start the local server
+- ```localhost:5000``` 
+to reach in your browser
 
 App currently deployed on heroku at http://bjorker.herokuapp.com
