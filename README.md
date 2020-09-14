@@ -10,6 +10,9 @@ free to keep trying different playlists!
 - Transforms track analysis data into usable tables, with values rescaled and used to train and test a machine learning model with ```scikit``` and ```keras```
 - Loads downstream data after applying predict functions with model, visualizing test data results in ```Flask``` app deployed on Heroku
 
+# Monitoring & Logs
+DataDog
+
 ## Future Features
 - Use URLs as well as URIs as input
 - Able to enter multiple playlists at once
